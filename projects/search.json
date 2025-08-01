@@ -1,0 +1,9 @@
+[
+  {
+    "objectID": "project.html",
+    "href": "project.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Projects\nBelow are selected projects showcasing my experience in machine learning, deep learning, NLP, data storytelling, and AI product design.\n\n\nSoundFlow: Intelligent Music Understanding and Generation\nTech: PyTorch, Librosa, CNNs, NSynth\nSkills: Deep learning, audio preprocessing, log-mel spectrograms\nRole: Built and trained CNN model to classify audio sources (acoustic, electronic, synthetic); extracted meaningful spectrogram features to support downstream generative audio modeling\nView project\n\n\n\nFrom Land Seizure to Repatriation: Storytelling Dashboard\nTech: R, Quarto, Leaflet, VegaLite\nSkills: Data storytelling, geospatial visualization, time-series UI design\nRole: Designed interactive dashboard tracing Indigenous dispossession and repatriation efforts; integrated multi-source data with narrative-driven visual flow\nView project\n\n\n\nNLP-Powered Perfume Recommendation System\nTech: Python, scikit-learn, Transformers, NLTK, Streamlit\nSkills: NLP, sentiment analysis, GPT-2, decision trees, recommendation systems\nRole: Built end-to-end perfume recommendation system with sentiment analysis, decision tree-based filtering, and GPT-2 text generation for custom descriptions\nView project\n\n\n\nModular AI Agent System for E-commerce Automation\nTech: Python, UML, draw.io, Prompt Design\nSkills: AI system architecture, task decomposition, reusable agent capability planning\nRole: Designed modular AI Agent framework for automating actions like bidding, budgeting, and sentiment monitoring across Amazon ads; mapped business workflows to reusable capabilities (image generation, sentiment analysis, sales prediction)\nView project"
+  }
+]

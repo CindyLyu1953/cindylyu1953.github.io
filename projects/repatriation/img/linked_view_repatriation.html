@@ -1,0 +1,139 @@
+
+<html>
+<head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            background-color: #f5f2e9;
+            font-family: Garamond;
+            color: #511F20;
+        }
+        .title {
+            text-align: center;
+            font-family: Garamond;
+            font-size: 24px;
+            color: #511F20;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">Total Repatriated Items by Year</div>
+    <div id="line-chart" style="height: 500px;"></div>
+
+    <div id="bar-title" class="title">Breakdown for 2025</div>
+    <div id="bar-chart" style="height: 500px;"></div>
+
+    <script>
+        // Create line chart
+        var lineTrace = {
+            x: [1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+            y: [72302.0, 72.0, 33766.0, 14308.0, 122019.0, 62700.0, 50892.0, 46015.0, 134720.0, 61544.0, 24965.0, 57165.0, 27191.0, 68456.0, 59570.0, 47188.0, 111758.0, 216055.0, 14356.0, 66668.0, 123975.0, 42865.0, 84228.0, 34067.0, 291360.0, 188158.0, 118027.0, 83573.0, 115036.0, 57402.0, 65400.0, 318094.0, 1734779.0, 98630.0],
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: {color: '#7f7340'},
+            marker: {color: '#7f7340'}
+        };
+        
+        var lineLayout = {
+            plot_bgcolor: '#f5f2e9',
+            paper_bgcolor: '#f5f2e9',
+            xaxis: {
+                title: {
+                    text: 'Year',
+                    font: {family: 'Garamond', size: 16, color: '#511F20'}
+                },
+                tickangle: 45,
+                tickfont: {family: 'Garamond', size: 16, color: '#511F20'},
+                linecolor: '#511F20',
+                ticks: 'outside',
+                showgrid: false,
+                zeroline: false
+            },
+            yaxis: {
+                title: {
+                    text: 'Count',
+                    font: {family: 'Garamond', size: 16, color: '#511F20'}
+                },
+                tickfont: {family: 'Garamond', size: 16, color: '#511F20'},
+                linecolor: '#511F20',
+                ticks: 'outside',
+                showgrid: false,
+                zeroline: false
+            }
+        };
+        
+        Plotly.newPlot('line-chart', [lineTrace], lineLayout);
+
+        // Initial bar chart for year 2025
+        var initYear = 2025;
+        var barLabels = ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'];
+        var barValues = [2790.0, 73437.0, 21895.0, 31.0, 341.0, 136.0];
+
+        var barTrace = {
+            x: barLabels,
+            y: barValues,
+            type: 'bar',
+            marker: {color: '#7f7340'},
+            hovertemplate: '%{x}: %{y}<extra></extra>'
+        };
+
+        var barLayout = {
+            plot_bgcolor: '#f5f2e9',
+            paper_bgcolor: '#f5f2e9',
+            hovermode: 'closest',
+            hoverlabel: {
+                font: {family: 'Times New Roman', size: 16, color: '#914532'},
+                bgcolor: '#f5f2e9',
+                bordercolor: '#511F20'
+            },
+            xaxis: {
+                title: {
+                    text: '',
+                    font: {family: 'Garamond', size: 16, color: '#511F20'}
+                },
+                tickangle: 20,
+                tickfont: {family: 'Garamond', size: 16, color: '#511F20'},
+                linecolor: '#511F20',
+                ticks: 'outside',
+                showgrid: false,
+                zeroline: false
+            },
+            yaxis: {
+                title: {
+                    text: 'Count',
+                    font: {family: 'Garamond', size: 16, color: '#511F20'}
+                },
+                tickfont: {family: 'Garamond', size: 16, color: '#511F20'},
+                linecolor: '#511F20',
+                ticks: 'outside',
+                showgrid: false,
+                zeroline: false
+            }
+        };
+
+        Plotly.newPlot('bar-chart', [barTrace], barLayout);
+
+        // Click event: update bar chart and title
+        document.getElementById('line-chart').on('plotly_click', function(data) {
+            var yearClicked = data.points[0].x;
+            var barLabels = {1992.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [25.0, 72277.0, 0.0, 0.0, 0.0, 0.0]}, 1993.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [43.0, 21.0, 0.0, 1.0, 0.0, 7.0]}, 1994.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1812.0, 259.0, 31651.0, 41.0, 1.0, 2.0]}, 1995.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [738.0, 13323.0, 6.0, 235.0, 3.0, 3.0]}, 1996.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [2669.0, 119158.0, 98.0, 64.0, 19.0, 11.0]}, 1997.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [3931.0, 57417.0, 1085.0, 111.0, 65.0, 91.0]}, 1998.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [8948.0, 39577.0, 2033.0, 53.0, 116.0, 165.0]}, 1999.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [5959.0, 37864.0, 2028.0, 68.0, 16.0, 80.0]}, 2000.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [4124.0, 125433.0, 4574.0, 551.0, 12.0, 26.0]}, 2001.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1505.0, 33996.0, 25903.0, 17.0, 24.0, 99.0]}, 2002.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [2581.0, 19367.0, 2824.0, 163.0, 3.0, 27.0]}, 2003.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1153.0, 54635.0, 1162.0, 58.0, 10.0, 147.0]}, 2004.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1860.0, 11384.0, 13926.0, 16.0, 4.0, 1.0]}, 2005.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1599.0, 62255.0, 2406.0, 2189.0, 2.0, 5.0]}, 2006.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1815.0, 32312.0, 25305.0, 17.0, 21.0, 100.0]}, 2007.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [776.0, 33797.0, 12318.0, 158.0, 68.0, 71.0]}, 2008.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [4420.0, 98751.0, 7434.0, 539.0, 578.0, 36.0]}, 2009.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1986.0, 207702.0, 6328.0, 22.0, 5.0, 12.0]}, 2010.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [2186.0, 8048.0, 3709.0, 17.0, 12.0, 384.0]}, 2011.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1362.0, 8463.0, 56775.0, 20.0, 5.0, 43.0]}, 2012.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [4845.0, 105520.0, 6250.0, 463.0, 6771.0, 126.0]}, 2013.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1862.0, 39008.0, 1594.0, 13.0, 207.0, 181.0]}, 2014.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [4040.0, 70473.0, 9395.0, 133.0, 178.0, 9.0]}, 2015.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [2273.0, 27695.0, 3882.0, 174.0, 9.0, 34.0]}, 2016.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [5385.0, 267329.0, 18616.0, 19.0, 5.0, 6.0]}, 2017.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [7047.0, 96295.0, 84655.0, 105.0, 15.0, 41.0]}, 2018.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [9972.0, 106507.0, 1527.0, 4.0, 8.0, 9.0]}, 2019.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [6749.0, 73147.0, 3523.0, 72.0, 50.0, 32.0]}, 2020.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [4477.0, 100812.0, 3834.0, 48.0, 5835.0, 30.0]}, 2021.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [2223.0, 38162.0, 16543.0, 119.0, 329.0, 26.0]}, 2022.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [16866.0, 42464.0, 4784.0, 844.0, 432.0, 10.0]}, 2023.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [19660.0, 273982.0, 8592.0, 165.0, 15605.0, 90.0]}, 2024.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [10329.0, 1641488.0, 43898.0, 1224.0, 37111.0, 729.0]}, 2025.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [2790.0, 73437.0, 21895.0, 31.0, 341.0, 136.0]}}[yearClicked]['labels'];
+            var barValues = {1992.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [25.0, 72277.0, 0.0, 0.0, 0.0, 0.0]}, 1993.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [43.0, 21.0, 0.0, 1.0, 0.0, 7.0]}, 1994.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1812.0, 259.0, 31651.0, 41.0, 1.0, 2.0]}, 1995.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [738.0, 13323.0, 6.0, 235.0, 3.0, 3.0]}, 1996.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [2669.0, 119158.0, 98.0, 64.0, 19.0, 11.0]}, 1997.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [3931.0, 57417.0, 1085.0, 111.0, 65.0, 91.0]}, 1998.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [8948.0, 39577.0, 2033.0, 53.0, 116.0, 165.0]}, 1999.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [5959.0, 37864.0, 2028.0, 68.0, 16.0, 80.0]}, 2000.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [4124.0, 125433.0, 4574.0, 551.0, 12.0, 26.0]}, 2001.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1505.0, 33996.0, 25903.0, 17.0, 24.0, 99.0]}, 2002.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [2581.0, 19367.0, 2824.0, 163.0, 3.0, 27.0]}, 2003.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1153.0, 54635.0, 1162.0, 58.0, 10.0, 147.0]}, 2004.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1860.0, 11384.0, 13926.0, 16.0, 4.0, 1.0]}, 2005.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1599.0, 62255.0, 2406.0, 2189.0, 2.0, 5.0]}, 2006.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1815.0, 32312.0, 25305.0, 17.0, 21.0, 100.0]}, 2007.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [776.0, 33797.0, 12318.0, 158.0, 68.0, 71.0]}, 2008.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [4420.0, 98751.0, 7434.0, 539.0, 578.0, 36.0]}, 2009.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1986.0, 207702.0, 6328.0, 22.0, 5.0, 12.0]}, 2010.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [2186.0, 8048.0, 3709.0, 17.0, 12.0, 384.0]}, 2011.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1362.0, 8463.0, 56775.0, 20.0, 5.0, 43.0]}, 2012.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [4845.0, 105520.0, 6250.0, 463.0, 6771.0, 126.0]}, 2013.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [1862.0, 39008.0, 1594.0, 13.0, 207.0, 181.0]}, 2014.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [4040.0, 70473.0, 9395.0, 133.0, 178.0, 9.0]}, 2015.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [2273.0, 27695.0, 3882.0, 174.0, 9.0, 34.0]}, 2016.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [5385.0, 267329.0, 18616.0, 19.0, 5.0, 6.0]}, 2017.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [7047.0, 96295.0, 84655.0, 105.0, 15.0, 41.0]}, 2018.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [9972.0, 106507.0, 1527.0, 4.0, 8.0, 9.0]}, 2019.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [6749.0, 73147.0, 3523.0, 72.0, 50.0, 32.0]}, 2020.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [4477.0, 100812.0, 3834.0, 48.0, 5835.0, 30.0]}, 2021.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [2223.0, 38162.0, 16543.0, 119.0, 329.0, 26.0]}, 2022.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [16866.0, 42464.0, 4784.0, 844.0, 432.0, 10.0]}, 2023.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [19660.0, 273982.0, 8592.0, 165.0, 15605.0, 90.0]}, 2024.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [10329.0, 1641488.0, 43898.0, 1224.0, 37111.0, 729.0]}, 2025.0: {'labels': ['Total Individuals', 'Total Funerary Objects', 'Total UFO', 'Total SO', 'Total OCP', 'Total OCP/SO'], 'values': [2790.0, 73437.0, 21895.0, 31.0, 341.0, 136.0]}}[yearClicked]['values'];
+
+            var update = {
+                x: [barLabels],
+                y: [barValues],
+                hovertemplate: '%{x}: %{y}<extra></extra>'
+            };
+
+            Plotly.update('bar-chart', update, [0]);
+
+            // Update the title with consistent style
+            document.getElementById('bar-title').innerText = 'Breakdown for ' + yearClicked;
+        });
+    </script>
+
+</body>
+</html>

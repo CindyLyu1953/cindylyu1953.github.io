@@ -1,0 +1,259 @@
+---
+title: "AI-Powered Perfume Recommendation System"
+subtitle: "NLP-driven perfume discovery with sentiment analysis and custom description generation"
+author: "Kexin Lyu, Fangzhou Wang, Shuyu Meng"
+format:
+  html:
+    toc: true
+    toc-location: left
+    code-fold: true
+    code-tools: true
+    theme: cosmo
+    css: ../../styles.css
+---
+
+## Brief Introduction
+
+This project presents an end-to-end **NLP-powered perfume recommendation system** that integrates **sentiment analysis**, **decision tree-based recommendation**, and **custom text generation** using **GPT-2**, all wrapped in an interactive web interface built with **Streamlit**.
+
+The system is designed to assist users in exploring perfumes based on their scent preferences and emotional tone, combining multiple natural language processing techniques into a unified pipeline:
+
+- **Sentiment Analysis of User Reviews**:  
+  Leveraging VADER (Valence Aware Dictionary and sEntiment Reasoner), we analyze perfume reviews scraped from Fragrantica to calculate compound sentiment scores, which are then used to refine recommendations based on the emotional appeal of each perfume.
+
+- **Decision Tree-Based Hierarchical Recommender**:  
+  Our engine employs a modular decision tree system to guide users through a sequence of choices.  
+  - Four decision trees are trained to predict successive main accords (`mainaccord2` to `mainaccord5`) based on prior user input.  
+  - A fifth tree predicts detailed accords (e.g., "caramel vanilla musk") based on the selected main accords.  
+  - A gender filter (male/female/unisex) is applied for final personalization.  
+  The interpretable structure ensures transparent decision-making and allows for precise, preference-driven matching.
+
+- **Custom Description Generation via GPT-2**:  
+  A fine-tuned GPT-2 model (from Hugging Face Transformers) is trained on perfume descriptions to automatically generate creative and persuasive marketing texts for recommended perfumes. These outputs emulate real commercial copy and adapt to selected scent profiles.
+
+- **Streamlit-Based Web Interface**:  
+  The final system is deployed through an intuitive and responsive web app where users can:
+  - Select up to 5 preferred main accords
+  - Apply sentiment thresholds to filter options
+  - Choose gender preferences
+  - Receive a curated list of perfume recommendations
+  - Read custom-generated perfume descriptions in real-time
+
+This project illustrates a practical fusion of rule-based modeling, interpretable machine learning, and generative AI, tailored for the **fragrance and e-commerce industry**. It showcases how **AI can enrich product discovery, personalize customer experience, and generate compelling narrative content**, paving the way for next-generation recommendation systems.
+
+## Demo
+
+::: {.panel-tabset}
+
+### Screenshots
+
+*[Screenshots will be added manually]*
+
+:::
+
+## Technical Deep Dive
+
+### Technologies Used
+
+#### Core Technologies
+- **Python 3.9+**: Primary programming language
+- **Streamlit**: Web application framework for rapid prototyping
+- **Pandas**: Data manipulation and analysis
+- **scikit-learn**: Machine learning algorithms (DecisionTreeClassifier)
+
+#### NLP & AI Libraries
+- **Transformers**: Hugging Face library for GPT-2 model
+- **NLTK**: Natural Language Toolkit for VADER sentiment analysis
+- **PyTorch**: Deep learning framework for model inference
+
+#### Development Tools
+- **Conda**: Environment management
+- **Pylint, Black, Ruff**: Code quality and formatting
+- **pytest**: Testing framework
+
+### System Architecture
+
+The system follows a modular architecture with three main components:
+
+1. **Data Processing Module**: Handles data cleaning, preprocessing, and sentiment analysis
+2. **Recommendation Engine**: Implements decision tree-based perfume filtering
+3. **Text Generation Module**: Generates custom descriptions using GPT-2
+
+### Code Showcase
+
+#### Data Processing Pipeline
+
+```python
+class DataProcessor:
+    def __init__(self, perfume_data_path, review_data_path):
+        self.perfume_data_path = perfume_data_path
+        self.review_data_path = review_data_path
+        self.vader_analyzer = SentimentIntensityAnalyzer()
+    
+    def preprocess_data(self):
+        """Clean and preprocess perfume data with sentiment analysis"""
+        # Load and clean perfume data
+        perfume_data = pd.read_csv(self.perfume_data_path)
+        
+        # Calculate sentiment scores for reviews
+        perfume_data['Average Sentiment Score'] = perfume_data['Reviews'].apply(
+            self._calculate_sentiment_score
+        )
+        
+        return perfume_data
+    
+    def _calculate_sentiment_score(self, reviews):
+        """Calculate VADER sentiment score for review text"""
+        if pd.isna(reviews):
+            return 0.0
+        
+        scores = self.vader_analyzer.polarity_scores(reviews)
+        return scores['compound']
+```
+
+#### Recommendation Engine
+
+```python
+class PerfumeRecommender:
+    def __init__(self, data):
+        self.data = data
+        self.decision_tree = DecisionTreeClassifier(random_state=42)
+        self._train_model()
+    
+    def recommend_perfumes(self, selected_accords, gender=None):
+        """Generate perfume recommendations based on user preferences"""
+        # Filter data based on selected accords
+        filtered_data = self._filter_by_accords(selected_accords)
+        
+        # Apply sentiment threshold filtering
+        if sentiment_threshold:
+            filtered_data = filtered_data[
+                filtered_data['Average Sentiment Score'] >= sentiment_threshold
+            ]
+        
+        # Return top recommendations
+        return filtered_data.head(10)[['Perfume', 'Brand', 'Main Accords']]
+    
+    def _train_model(self):
+        """Train decision tree model for accord prediction"""
+        # Prepare features and target for training
+        X = self.data[['mainaccord1', 'mainaccord2', 'mainaccord3']]
+        y = self.data['mainaccord4']  # Predict next accord
+        
+        self.decision_tree.fit(X, y)
+```
+
+#### Text Generation with GPT-2
+
+```python
+class TextGenerator:
+    def __init__(self):
+        self.tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+        self.model = GPT2LMHeadModel.from_pretrained('gpt2')
+        
+        # Load fine-tuned weights if available
+        if os.path.exists('fine_tuned_model'):
+            self.model.load_state_dict(torch.load('fine_tuned_model'))
+    
+    def generate_description(self, prompt, max_length=100):
+        """Generate custom perfume description using GPT-2"""
+        # Tokenize input prompt
+        inputs = self.tokenizer.encode(prompt, return_tensors='pt')
+        
+        # Generate text with controlled parameters
+        with torch.no_grad():
+            outputs = self.model.generate(
+                inputs,
+                max_length=max_length,
+                num_return_sequences=1,
+                temperature=0.8,
+                do_sample=True,
+                pad_token_id=self.tokenizer.eos_token_id
+            )
+        
+        # Decode and return generated text
+        generated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        return generated_text
+```
+
+#### Streamlit Web Interface
+
+```python
+def main():
+    """Main Streamlit application"""
+    st.title("Perfume Recommender and Description Generator")
+    
+    # Initialize components
+    processor = DataProcessor("fra_cleaned.csv", "reviews.csv")
+    data = processor.preprocess_data()
+    recommender = PerfumeRecommender(data)
+    generator = TextGenerator()
+    
+    # User input section
+    st.subheader("Select Main Accords")
+    selected_accords = {}
+    for i in range(1, 6):
+        accord = st.text_input(f"Main Accord {i} (optional)", key=f"accord_{i}")
+        if accord:
+            selected_accords[f"mainaccord{i}"] = accord.lower()
+    
+    # Sentiment threshold slider
+    sentiment_threshold = st.slider("Sentiment Score Threshold", -1.0, 1.0, 0.0)
+    
+    # Generate recommendations
+    if st.button("Recommend Perfumes"):
+        perfumes = recommender.recommend_perfumes(selected_accords)
+        
+        if not perfumes.empty:
+            st.success("Recommended Perfumes:")
+            st.table(perfumes)
+            
+            # Generate descriptions
+            st.subheader("Generated Descriptions")
+            for _, perfume in perfumes.iterrows():
+                prompt = f"This perfume, {perfume['Perfume']} by {perfume['Brand']}, is known for its"
+                description = generator.generate_description(prompt)
+                st.write(f"**{perfume['Perfume']} by {perfume['Brand']}**")
+                st.write(f"*Description:* {description}")
+                st.write("---")
+
+if __name__ == "__main__":
+    main()
+```
+
+### Key Features Implementation
+
+#### Sentiment Analysis Integration
+The system uses VADER sentiment analysis to filter perfumes based on user review sentiment, ensuring recommendations align with user preferences for positive or negative experiences.
+
+#### Decision Tree Recommendation Logic
+The recommendation engine employs decision trees to:
+- Predict likely next accords based on user selections
+- Filter perfumes by multiple criteria simultaneously
+- Provide personalized recommendations based on historical patterns
+
+#### GPT-2 Fine-tuning for Description Generation
+The text generation module:
+- Uses pre-trained GPT-2 model for natural language generation
+- Can be fine-tuned on perfume-specific text data
+- Generates contextually relevant descriptions for recommended perfumes
+
+### Performance Considerations
+
+- **Data Processing**: Efficient pandas operations for large datasets
+- **Model Inference**: Optimized GPT-2 inference with controlled generation parameters
+- **User Experience**: Responsive Streamlit interface with real-time recommendations
+- **Scalability**: Modular design allows for easy integration of additional models or data sources
+
+### Future Enhancements
+
+- **Advanced ML Models**: Integration of collaborative filtering and neural networks
+- **Multilingual Support**: Support for multiple languages using multilingual models
+- **Data Visualization**: Interactive charts showing sentiment trends and recommendation statistics
+- **API Development**: RESTful API for integration with other applications 
+
+---
+
+<div style="text-align:center; font-style:italic; color:var(--text-color); margin-top:2rem;">
+As Marcel Proust illustrated in In Search of Lost Time, “a single whiff of a madeleine dipped in tea could bring back a flood of childhood memories.” Similarly, with our system, we hope every recommended perfume can evoke not just an experience, but a story.
+</div>
