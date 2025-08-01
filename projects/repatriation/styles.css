@@ -1,0 +1,160 @@
+/* Our Custom Web Theme Inspired by Project Palette */
+
+:root {
+  --color-primary: #7F7340;
+  --color-secondary: #C6B28D;
+  --color-accent: #BB8642;
+  --color-dark: #655255;
+  --color-warm: #B48959;
+  --color-bold: #733D25;
+  --color-deep: #42150F;
+
+  --text-color: #914532;
+  --edge-color: #511F20;
+
+  --font-main: 'Garamond', serif;
+  --font-math: 'Times New Roman', serif;
+}
+
+body {
+  font-family: var(--font-main);
+  font-size: 20px;
+  color: var(--text-color);
+  background: url("./img/tribal-map-lake-erie.png") no-repeat center center fixed;
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #f9f5ec;
+  background-blend-mode: overlay;
+  line-height: 1.6;
+  margin: 2rem;
+}
+
+h1, h2, h3 {
+  color: var(--edge-color);
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2.2rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+a {
+  color: var(--color-bold);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+nav, footer {
+  background-color: rgba(244, 232, 205, 0.95);  /* 羊皮纸感导航栏 */
+  color: var(--edge-color);
+  border-bottom: 3px solid #8c6239;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  padding: 1rem;
+  font-family: var(--font-main);
+}
+
+/* Title on separate line */
+.navbar-title {
+  display: block !important;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+  text-align: center;
+}
+
+/* Navigation bar layout */
+.navbar {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.navbar-nav {
+  margin: 0 auto;
+  display: flex;
+  gap: 1.2rem;
+  font-size: 1.05rem;
+}
+
+.navbar a {
+  color: #5c3a21 !important;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navbar a:hover {
+  color: #bb8642 !important;
+  text-decoration: underline;
+}
+
+/* Code and tables */
+pre, code {
+  background-color: #fff8ec;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table, th, td {
+  border: 1px solid var(--color-primary);
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+/* Plot container */
+.plot-container {
+  background-color: var(--edge-color);
+  border: 2px solid var(--color-accent);
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+/* Custom Title Styles */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap');
+
+.custom-title {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+.title-line-1 {
+  font-size: 3rem;
+  font-weight: bold;
+  font-family: 'Playfair Display SC', serif;
+  margin-bottom: 0.3rem;
+  color: #42150F;
+}
+
+.title-line-2 {
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: 'Cormorant Garamond', serif;
+  color: #42150F;
+}
+
+
+  
